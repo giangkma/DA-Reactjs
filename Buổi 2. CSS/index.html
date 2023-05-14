@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chia layout với float - freetuts.net</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      /* img {
+        margin: 0px auto;
+        display: block;
+      } */
+      #container {
+        background-color: rgb(149, 149, 149);
+      }
+      header {
+        background-color: rgb(233, 49, 49);
+        height: 100px;
+      }
+      .content {
+        background-color: rgb(49, 233, 49);
+        height: 300px;
+        display: flex;
+        gap: 30px;
+        /* flex-direction: column; */
+      }
+      main {
+        background-color: rgb(49, 49, 233);
+        flex: 1;
+      }
+      aside {
+        background-color: rgb(233, 233, 49);
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <header>Header</header>
+      <div class="content">
+        <main>main</main>
+        <aside>Side bar</aside>
+      </div>
+    </div>
+    <!-- <img
+      src="https://tse3.mm.bing.net/th?id=OIP.iSu2RcCcdm78xbxNDJMJSgHaEo&pid=Api&P=0"
+      alt=""
+    /> -->
+  </body>
+</html>

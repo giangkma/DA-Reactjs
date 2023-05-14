@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+/* body {
+  background-image: url("https://tse1.mm.bing.net/th?id=OIP.NbfPECA64xbFnmW58MbWDQHaEo&pid=Api&P=0");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+} */
+p {
+  color: #303a2b;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: italic;
+  font-family: "Quicksand", sans-serif;
+}
+flex box 
+grid box
+
+responsive
