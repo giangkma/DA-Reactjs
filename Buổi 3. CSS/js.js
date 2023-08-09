@@ -1,5 +1,8 @@
-const enterStudent = document.querySelector("#enterStudent");
-const addStudent = document.querySelector("#addStudent");
+const enterName = document.querySelector("#enterName");
+const enterAge = document.querySelector("#enterAge");
+const enterEmail = document.querySelector("#enterEmail");
+const openForm = document.querySelector("#enterInfo");
+const addStudent = document.querySelector("#submit-modal");
 const enterCode = document.querySelector("#enterCode");
 const addCode = document.querySelector("#addCode");
 const startRandom = document.querySelector("#startRandom");
@@ -12,9 +15,14 @@ const listResult = document.querySelector("#list-result");
 const modal = document.querySelector("#modal");
 const closeModal = document.querySelector("#close-modal");
 
-const listStudent = [];
+const listStudent = JSON.parse(sessionStorage.getItem("data")) || [];
+
 const listCode = [];
 let result = [];
+
+const onOpenForm = () => {
+  modal.style.display = "block";
+};
 
 const onAddStudent = () => {
   // const { value } = enterStudent;
@@ -24,7 +32,24 @@ const onAddStudent = () => {
   // listStudent.push(value);
   // enterStudent.value = "";
   // onRenderStudents();
-  modal.style.display = "block";
+  const name = enterName.value;
+  const age = enterAge.value;
+  const email = enterEmail.value;
+  listStudent.push({
+    name: name,
+    age: age,
+    email: email,
+  });
+  saveDataToLocal();
+  enterAge.value = "";
+  enterEmail.value = "";
+  enterName.value = "";
+  onRenderStudents();
+  modal.style.display = "none";
+};
+
+const saveDataToLocal = () => {
+  sessionStorage.setItem("data", JSON.stringify(listStudent));
 };
 
 const onAddCode = () => {
@@ -37,19 +62,48 @@ const onAddCode = () => {
   onRenderCodes();
 };
 
+const removeStudent = (index) => {
+  listStudent.splice(index, 1);
+  saveDataToLocal();
+  onRenderStudents();
+};
+
+const removeCode = (index) => {
+  listCode.splice(index, 1);
+  onRenderCodes();
+};
+
 const onRenderStudents = () => {
   renderStudents.innerHTML = listStudent
-    .map((student) => `<p>${student}</p>`)
+    .map(
+      (student, index) => `
+    <div class="flex-item">
+      <p>${student.name}</p>
+      <button onClick="removeStudent('${index}')">X</button>
+    </div>
+    `
+    )
     .join("");
 };
 
 const onRenderCodes = () => {
-  renderCodes.innerHTML = listCode.map((code) => `<p>${code}</p>`).join("");
+  renderCodes.innerHTML = listCode
+    .map(
+      (code, index) => `
+  <div class="flex-item">
+    <p>${code}</p>
+    <button onClick="removeCode('${index}')">X</button>
+  </div>`
+    )
+    .join("");
 };
 
 const onRenderResult = () => {
   listResult.innerHTML = result
-    .map((item) => `<p>${item.student}</p> <p>${item.code}</p>`)
+    .map(
+      (item) =>
+        `<p>${item.name}</p> <p>${item.age}</p> <p>${item.email}</p> <p>${item.code}</p>`
+    )
     .join("");
 };
 
@@ -60,28 +114,23 @@ const onStartRandom = () => {
     return alert("Vui lòng nhập đủ thông tin");
   }
 
-  const newListCode = shuffleArray([...listCode]);
-  result = listStudent.map((student, index) => {
+  result = listStudent.map(({ name, age, email }, index) => {
     return {
-      student,
-      code: newListCode[Math.floor(Math.random() * lengthCode)],
+      name,
+      age,
+      email,
+      code: listCode[Math.floor(Math.random() * lengthCode)],
     };
   });
   onRenderResult();
 };
 
-/* Randomize array in-place using Durstenfeld shuffle algorithm */
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
+openForm.addEventListener("click", onOpenForm);
 addStudent.addEventListener("click", onAddStudent);
 addCode.addEventListener("click", onAddCode);
 startRandom.addEventListener("click", onStartRandom);
 closeModal.addEventListener("click", () => {
   modal.style.display = "none";
 });
+
+onRenderStudents();

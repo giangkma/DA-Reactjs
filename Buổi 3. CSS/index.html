@@ -7,16 +7,13 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="content">
       <div>
         <div>
-          <input
-            type="text"
-            id="enterStudent"
-            placeholder="Nhập tên học sinh :"
-          />
-          <button id="addStudent">+</button>
+          <input type="text" id="" placeholder="Nhập thông tin học sinh :" />
+          <button id="enterInfo">+</button>
         </div>
         <div id="render-students"></div>
       </div>
@@ -34,15 +31,30 @@
     <div class="result">
       <div class="row">
         <p>Họ tên</p>
+        <p>Tuổi</p>
+        <p>Email</p>
         <p>Mã đề thi</p>
       </div>
       <div class="row" id="list-result"></div>
     </div>
     <div class="modal" id="modal">
       <div class="modal-content">
-        <input type="text" id="enterCode" placeholder="Nhập mã đề thi :" />
-        nhập gì đó đi
-        <button id="close-modal">Close</button>
+        <div class="name">
+          <span>Tên: </span>
+          <input type="text" id="enterName" placeholder="Nhập tên học sinh" />
+        </div>
+        <div class="age">
+          <span>Tuổi: </span>
+          <input type="text" id="enterAge" placeholder="Nhập tuổi" />
+        </div>
+        <div class="email">
+          <span>Email: </span>
+          <input type="text" id="enterEmail" placeholder="Nhập email" />
+        </div>
+        <div class="button-modal">
+          <button id="submit-modal">Submit</button>
+          <button id="close-modal">Close</button>
+        </div>
       </div>
     </div>
     <script src="js.js"></script>
