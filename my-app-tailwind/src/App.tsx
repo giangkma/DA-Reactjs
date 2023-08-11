@@ -1,9 +1,10 @@
-import { TodoList } from "./pages/TodoList";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes";
 
 export const App = () => {
   return (
-    <>
-      <TodoList />
-    </>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 };

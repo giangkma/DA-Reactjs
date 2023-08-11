@@ -24,7 +24,7 @@ export function InputTask({ addTask }: IProps) {
       />
       <button
         onClick={handleAddTask}
-        className="ml-4 group h-12 w-48 overflow-hidden rounded-2xl bg-green-500 text-lg font-bold text-white"
+        className="bg-red-500 ml-4 group h-12 w-48 overflow-hidden rounded-2x text-lg font-bold text-white"
       >
         Add
       </button>
