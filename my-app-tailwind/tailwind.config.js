@@ -3,11 +3,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        giang: "#333",
+        cultured: "#FAF4F4",
       },
-      spacing: {
-        giang: "10px",
-      },
+      spacing: {},
     },
   },
   plugins: [],

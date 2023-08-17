@@ -1,20 +1,17 @@
-import { HomePageView } from "../components/home";
-import { AdminPage } from "../pages/Admin";
-import { TodoList } from "../pages/TodoList";
-import { AdminRoute } from "./AdminRoute";
+import { Navigate } from "react-router-dom";
+import { HomePage, LoginPage } from "../pages";
 
 export const ROUTES = [
   {
     path: "/home",
-    element: <HomePageView />,
+    element: <HomePage />,
   },
-  { path: "/todo", element: <TodoList /> },
   {
-    path: "/admin",
-    element: (
-      <AdminRoute>
-        <AdminPage />
-      </AdminRoute>
-    ),
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/home" />,
   },
 ];
