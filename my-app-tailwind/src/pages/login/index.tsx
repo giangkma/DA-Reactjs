@@ -7,63 +7,94 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
-import { IFormLoginValues } from "../../domain/login";
+import { IFormLoginValues, loginSchema } from "../../domain/login";
+import { Checkbox } from "../../components/inputs/Checkbox";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const LoginPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const { isLogged } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { isLogged } = useAuth();
 
-  useEffect(() => {
-    if (isLogged) {
-      navigate("/home");
-    }
-  }, [isLogged]);
+    useEffect(() => {
+        if (isLogged) {
+            navigate("/home");
+        }
+    }, [isLogged]);
 
-  // ================
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    getValues,
-  } = useForm<IFormLoginValues>();
+    // ================
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm<any>({
+        resolver: yupResolver(loginSchema),
+        // defaultValues: {
+        //     email: "shah",
+        // },
+    });
 
-  const onSubmitForm = (data: IFormLoginValues) => {
-    console.log(data);
-  };
+    const onSubmitForm = (data: any) => {
+        console.log(data);
+    };
 
-  const address = watch("address");
+    // {
+    //   email : "",
+    //   check: true,
 
-  const check = () => {
-    console.log(address);
-  };
+    //   address: {
+    //     city: "hsda",
+    //     code: "fdjdfj"
+    //   }
 
-  return (
-    <div className="w-full max-w-xs mx-auto mt-40">
-      <button onClick={check}>get address</button>
+    //   points: [1, 20]
+    // }
 
-      {isLoading && <Loading />}
-      <form
-        onSubmit={handleSubmit(onSubmitForm)}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <Input
-          className="mt-4"
-          name="email"
-          label="Email"
-          placeholder="Enter your email"
-          register={register}
-          errors={errors}
-          rules={{
-            required: "Email is required",
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Entered value does not match email format",
-            },
-          }}
-        />
-        <Input
+    return (
+        <div className="w-full max-w-xs mx-auto mt-40">
+            {isLoading && <Loading />}
+            <form onSubmit={handleSubmit(onSubmitForm)} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <Input
+                    className="mt-4"
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    control={control}
+                    errorMessage={errors?.email?.message}
+                />
+                {/* <Checkbox name="check" control={control} errors={errors} label="Remember me" /> */}
+                {/* <Input
+                    className="mt-4"
+                    name="address.city"
+                    label="City"
+                    placeholder="Enter your city"
+                    control={control}
+                    errors={errors}
+                />
+                <Input
+                    className="mt-4"
+                    name="address.code.key"
+                    label="Code"
+                    placeholder="Enter your code"
+                    control={control}
+                    errors={errors}
+                />
+
+                {[0, 1].map((item, index) => {
+                    return (
+                        <Input
+                            className="mt-4"
+                            name={`point[${index}]`}
+                            label="Min"
+                            placeholder="Enter your min point"
+                            control={control}
+                            errors={errors}
+                        />
+                    );
+                })} */}
+
+                {/* <Input
           className="mt-4"
           name="address"
           label="Address"
@@ -118,16 +149,16 @@ export const LoginPage = () => {
           type="password"
           register={register}
           errors={errors}
-        />
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Sign In
-          </button>
+        /> */}
+                <div className="flex items-center justify-between">
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"
+                    >
+                        Sign In
+                    </button>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  );
+    );
 };
