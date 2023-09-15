@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { HomePage, LoginPage } from "../pages";
+import { CounterPage } from "../pages/counter";
 
 export const ROUTES = [
   {
@@ -9,6 +10,10 @@ export const ROUTES = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/counter",
+    element: <CounterPage />,
   },
   {
     path: "*",
