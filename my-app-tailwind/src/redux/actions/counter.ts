@@ -8,6 +8,6 @@ export const decrementAction = () => {
   return { type: DECREMENT };
 };
 
-export const setTypeAction = (type: string) => {
+export const setTypeAction = (type: number[]) => {
   return { type: SET_TYPE, payload: type };
 };

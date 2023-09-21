@@ -1,14 +1,14 @@
-import { useSelector } from "react-redux";
 import {
   getCounterNumber,
   getCounterType,
 } from "../../../redux/reducers/counter";
 import { getUserName } from "../../../redux/reducers/user";
+import { useAppSelector } from "../../../redux/store";
 
 export const Children = () => {
-  const count = useSelector(getCounterNumber);
-  const type = useSelector(getCounterType);
-  const name = useSelector(getUserName);
+  const count = useAppSelector(getCounterNumber);
+  const type = useAppSelector(getCounterType);
+  const name = useAppSelector(getUserName);
 
   return (
     <div>

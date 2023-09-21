@@ -4,12 +4,12 @@ import { RootState } from "../store";
 // Reducer function
 export interface ICounterState {
   number: number;
-  type: string;
+  type: number[];
 }
 
 const initialState: ICounterState = {
   number: 0,
-  type: "",
+  type: [],
 };
 
 export const counterReducer = (state = initialState, action: any) => {
