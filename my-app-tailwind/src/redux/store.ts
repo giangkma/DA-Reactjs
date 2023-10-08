@@ -3,28 +3,33 @@ import { Action, applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { persistReducer, persistStore } from "redux-persist";
 
-import Sessionstorage from "redux-persist/lib/storage/session";
-import Localstorage from "redux-persist/lib/storage";
+// import Sessionstorage from "redux-persist/lib/storage/session";
+import localStorage from "redux-persist/lib/storage";
 
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { counterReducer } from "./reducers/counter";
 import { userReducer } from "./reducers/user";
+import { productReducer } from "./reducers/product";
 
-const counterConfig = {
-  key: "counter",
-  storage: Localstorage,
-  whitelist: ["number"],
+const persistConfig = {
+  key: "app",
+  storage: localStorage,
 };
 
-const userConfig = {
-  key: "user",
-  storage: Sessionstorage,
-};
+// const rootReducer = combineReducers({
+//   counter: persistReducer(counterConfig, counterReducer),
+//   user: persistReducer(userConfig, userReducer),
+//   product: persistReducer(userConfig, userReducer),
+// });
 
-const rootReducer = combineReducers({
-  counter: persistReducer(counterConfig, counterReducer),
-  user: persistReducer(userConfig, userReducer),
-});
+const rootReducer = persistReducer(
+  persistConfig,
+  combineReducers({
+    counter: counterReducer,
+    user: userReducer,
+    product: productReducer,
+  })
+);
 
 const persistedReducer = rootReducer;
 

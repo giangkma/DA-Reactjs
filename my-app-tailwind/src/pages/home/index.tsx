@@ -1,26 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { getProductsThunk } from "../../redux/thunks/product";
+import { Loading } from "../../components/Loading";
+import { getProducts, getProductsFromCart } from "../../redux/reducers/product";
+import { Product } from "./components/Product";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 
 // React.memo
 export const HomePage = () => {
-  const { isLogged } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(getProducts);
+  const productsFromCart = useAppSelector(getProductsFromCart);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isLogged) {
-      navigate("/login");
+  const getProductsData = async () => {
+    try {
+      setLoading(true);
+      await dispatch(getProductsThunk());
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-  }, [isLogged]);
+  };
+
+  useEffect(() => {
+    getProductsData();
+  }, []);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(https://www.pixelstalk.net/wp-content/uploads/2016/08/Pictures-Background-HD.jpg)`,
-      }}
-      className="bg-cover p-4 bg-center bg-no-repeat"
-    >
-      <h1>Home</h1>
+    <div className="p-5">
+      {loading && <Loading />}
+      <div className="flex items-center justify-between">
+        <h1>Home</h1>
+        <button
+          onClick={() => {
+            navigate("/cart");
+          }}
+        >
+          Cart ({productsFromCart?.length})
+        </button>
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        {products?.map((product) => {
+          return <Product key={product.id} product={product} />;
+        })}
+      </div>
     </div>
   );
 };

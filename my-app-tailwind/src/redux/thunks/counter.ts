@@ -7,11 +7,3 @@ export const incrementActionThunk = () => {
     dispatch(incrementAction());
   };
 };
-
-const mockGetApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([1, 12, 2, 3, 4, 4, 44, 4]);
-    }, 1000);
-  });
-};
